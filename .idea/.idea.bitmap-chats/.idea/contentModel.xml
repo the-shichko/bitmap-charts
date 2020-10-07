@@ -7,6 +7,9 @@
       <e p="bitmap-chats" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="bitmap-chats.csproj" t="IncludeRecursive" />
+        <e p="Models" t="Include">
+          <e p="PointModel.cs" t="Include" />
+        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp3.1" t="Include">
@@ -14,7 +17,6 @@
             </e>
           </e>
         </e>
-        <e p="PointModel.cs" t="Include" />
         <e p="Services" t="Include">
           <e p="ChartService.cs" t="Include" />
         </e>

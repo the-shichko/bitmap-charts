@@ -11,7 +11,7 @@ namespace samples
     {
         static async Task Main(string[] args)
         {
-            var chartService = new ChartService<int>(1300,1000)
+            var chartService = new ChartService<int>(1300, 1000)
             {
                 DivisionAxisX = 4,
                 DivisionAxisY = 30,
@@ -25,7 +25,8 @@ namespace samples
                 BackgroundColor = Brushes.WhiteSmoke,
             };
 
-            chartService.GetChart(new List<int>{30, 150, 190, 68, 69, 100, 78, 40, 54, 23, 98, 66, 140}).Save(Directory.GetCurrentDirectory() + "\\chart.png");
+            chartService.GetChart(new List<int> {30, 150, 190, 68, 69, 100, 78, 40, 54, 23, 98, 66, 140})
+                .Save(Directory.GetCurrentDirectory() + "\\chart.png");
 
             Console.WriteLine("Completed");
             await Task.Delay(-1);
