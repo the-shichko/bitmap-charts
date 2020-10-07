@@ -21,9 +21,10 @@ namespace samples
                 ChartPen = new Pen(Brushes.DodgerBlue, 5),
                 RaduisPoint = 15,
                 EllipseColor = Brushes.RoyalBlue,
-                DivisionColor = Brushes.Gray,
+                DivisionColor = Brushes.RoyalBlue,
                 TextColor = Brushes.Black,
                 BackgroundColor = Brushes.WhiteSmoke,
+                ChartTitle = "Test nick @the_shichko.exe"
             };
 
             chartService.Items = new List<TestModel>()

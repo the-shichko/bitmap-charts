@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.IO;
 using System.Linq;
 
 namespace bitmap_chats.Services
@@ -13,13 +14,14 @@ namespace bitmap_chats.Services
         public int DivisionAxisX { get; set; } = 1;
         public int DivisionAxisY { get; set; } = 1;
         public Font ChartFont { get; set; } = new Font("Bahnschrift", 20);
-        public Pen AxisPen { get; set; }= new Pen(Brushes.Black, 1);
+        public Pen AxisPen { get; set; } = new Pen(Brushes.Black, 1);
         public Pen ChartPen { get; set; } = new Pen(Brushes.Black, 5);
         public int RaduisPoint { get; set; } = 10;
         public Brush EllipseColor { get; set; } = Brushes.RoyalBlue;
         public Brush DivisionColor { get; set; } = Brushes.Black;
         public Brush TextColor { get; set; } = Brushes.Black;
         public Brush BackgroundColor { get; set; } = Brushes.White;
+        public string ChartTitle { get; set; } = "Chart1";
         public IEnumerable<T> Items { get; set; }
 
         private readonly int _width;
@@ -49,7 +51,11 @@ namespace bitmap_chats.Services
             var imageSize = new Rectangle(0, 0, _width, _height);
             graph.FillRectangle(BackgroundColor, imageSize);
 
-            graph.DrawLine(AxisPen, Margin, Margin, Margin, _height - Margin);
+            //title
+            graph.DrawString(ChartTitle, new Font(ChartFont.FontFamily, (int)(ChartFont.Size * 1.5)), TextColor,
+                _width / 2 - (ChartTitle.Length / 2 * 18), 30);
+
+            graph.DrawLine(AxisPen, Margin, Margin + 100, Margin, _height - Margin);
             graph.DrawLine(AxisPen, Margin, _height - Margin, _width - Margin, _height - Margin);
 
             var maxValue = Items.Max(filter);
@@ -95,7 +101,8 @@ namespace bitmap_chats.Services
             var ellipsePoints = new List<PointModel>();
             for (var i = 0; i < Items.Count(); i++)
             {
-                var pixelYValue = divisionHeight * Items.Select(filter).ToList()[i] - divisionHeight * Items.Min(filter) + 25;
+                var pixelYValue = divisionHeight * Items.Select(filter).ToList()[i] -
+                    divisionHeight * Items.Min(filter) + 25;
                 var pixelXValue = divisionWidth * (i + 1);
 
                 if (i > 0)
