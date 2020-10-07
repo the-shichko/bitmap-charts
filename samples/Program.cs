@@ -29,20 +29,20 @@ namespace samples
 
             chartService.Items = new List<TestModel>()
             {
-                new TestModel() {Value = 30, Name = "Name"},
-                new TestModel() {Value = 50, Name = "Name"},
-                new TestModel() {Value = 90, Name = "Name"},
-                new TestModel() {Value = 70, Name = "Name"},
-                new TestModel() {Value = 34, Name = "Name"},
-                new TestModel() {Value = 47, Name = "Name"},
-                new TestModel() {Value = 89, Name = "Name"},
-                new TestModel() {Value = 54, Name = "Name"},
-                new TestModel() {Value = 52, Name = "Name"},
-                new TestModel() {Value = 78, Name = "Name"},
-                new TestModel() {Value = 98, Name = "Name"},
-                new TestModel() {Value = 12, Name = "Name"},
-                new TestModel() {Value = 16, Name = "Name"},
-                new TestModel() {Value = 90, Name = "Name"},
+                new TestModel() {Value = 30.4, Name = "Name"},
+                new TestModel() {Value = 50.7, Name = "Name"},
+                new TestModel() {Value = 90.3, Name = "Name"},
+                new TestModel() {Value = 70.4, Name = "Name"},
+                new TestModel() {Value = 34.1, Name = "Name"},
+                new TestModel() {Value = 47.6, Name = "Name"},
+                new TestModel() {Value = 89.4, Name = "Name"},
+                new TestModel() {Value = 54.9, Name = "Name"},
+                new TestModel() {Value = 52.2, Name = "Name"},
+                new TestModel() {Value = 78.3, Name = "Name"},
+                new TestModel() {Value = 98.45, Name = "Name"},
+                new TestModel() {Value = 12.67, Name = "Name"},
+                new TestModel() {Value = 16.4, Name = "Name"},
+                new TestModel() {Value = 90.8, Name = "Name"},
             };
             chartService.GetChart(x => x.Value)
                 .Save(Directory.GetCurrentDirectory() + "\\chart.png");

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -39,7 +40,7 @@ namespace bitmap_chats.Services
             _end = new Point(width - Margin, Margin + 100);
         }
 
-        public Bitmap GetChart(Func<T, int> filter)
+        public Bitmap GetChart(Func<T, double> filter)
         {
             var bitmap = new Bitmap(_width, _height);
 
@@ -52,18 +53,18 @@ namespace bitmap_chats.Services
             graph.FillRectangle(BackgroundColor, imageSize);
 
             //title
-            graph.DrawString(ChartTitle, new Font(ChartFont.FontFamily, (int)(ChartFont.Size * 1.5)), TextColor,
+            graph.DrawString(ChartTitle, new Font(ChartFont.FontFamily, (int) (ChartFont.Size * 1.5)), TextColor,
                 _width / 2 - (ChartTitle.Length / 2 * 18), 30);
 
             graph.DrawLine(AxisPen, Margin, Margin + 100, Margin, _height - Margin);
             graph.DrawLine(AxisPen, Margin, _height - Margin, _width - Margin, _height - Margin);
 
-            var maxValue = Items.Max(filter);
-            var minValue = Items.Min(filter);
+            var maxValue = Math.Ceiling(Items.Max(filter));
+            var minValue = (int)Items.Min(filter);
             var countValue = Items.Count();
 
             var chartWidth = Math.Abs(_end.X - _start.X - 50);
-            var chartHeight = Math.Abs(_end.Y - (_start.Y + 50));
+            var chartHeight = Math.Abs(_end.Y - (_start.Y - 50));
 
             var divisionHeight = chartHeight / (maxValue - minValue);
             var divisionWidth = chartWidth / countValue;
@@ -87,9 +88,9 @@ namespace bitmap_chats.Services
                 graph.FillEllipse(DivisionColor, _start.X - RaduisPoint / 2, startDivY - RaduisPoint / 2,
                     RaduisPoint,
                     RaduisPoint);
-                graph.DrawString(i.ToString(), ChartFont, TextColor,
+                graph.DrawString(i.ToString(CultureInfo.InvariantCulture), ChartFont, TextColor,
                     new PointF(_start.X + Margin / 2, startDivY - 10));
-                startDivY -= divisionHeight * DivisionAxisY;
+                startDivY -= (int) (divisionHeight * DivisionAxisY);
             }
 
             #endregion
@@ -107,17 +108,17 @@ namespace bitmap_chats.Services
 
                 if (i > 0)
                 {
-                    var currentPoint = new Point(_start.X + pixelXValue, _start.Y - pixelYValue);
+                    var currentPoint = new Point(_start.X + pixelXValue, (int) (_start.Y - pixelYValue));
                     graph.DrawLine(ChartPen, prevPoint, currentPoint);
                 }
 
                 ellipsePoints.Add(new PointModel()
                 {
-                    Point = new Point(_start.X + pixelXValue, _start.Y - pixelYValue),
+                    Point = new Point(_start.X + pixelXValue, (int) (_start.Y - pixelYValue)),
                     Value = Items.Select(filter).ToList()[i]
                 });
 
-                prevPoint = new Point(_start.X + pixelXValue, _start.Y - pixelYValue);
+                prevPoint = new Point(_start.X + pixelXValue, (int) (_start.Y - pixelYValue));
             }
 
             foreach (var pointModel in ellipsePoints)
@@ -125,7 +126,8 @@ namespace bitmap_chats.Services
                 graph.FillEllipse(EllipseColor, pointModel.Point.X - RaduisPoint / 2,
                     pointModel.Point.Y - RaduisPoint / 2, RaduisPoint, RaduisPoint);
                 graph.DrawString($"({pointModel.Value})", ChartFont, TextColor,
-                    pointModel.Point.X - ChartFont.Size * pointModel.Value.ToString().Length,
+                    pointModel.Point.X -
+                    ChartFont.Size * pointModel.Value.ToString(CultureInfo.InvariantCulture).Length,
                     pointModel.Point.Y - ChartFont.Size - 15);
             }
 
