@@ -34,6 +34,7 @@
         </e>
         <e p="Program.cs" t="Include" />
         <e p="samples.csproj" t="IncludeRecursive" />
+        <e p="TestModel.cs" t="Include" />
       </e>
     </e>
   </component>

@@ -34,10 +34,10 @@ namespace bitmap_chats.Services
             _height = height;
 
             _start = new Point(Margin, height - Margin);
-            _end = new Point(width - Margin, Margin);
+            _end = new Point(width - Margin, Margin + 100);
         }
 
-        public Bitmap GetChart(List<int> items)
+        public Bitmap GetChart(Func<T, int> filter)
         {
             var bitmap = new Bitmap(_width, _height);
 
@@ -52,9 +52,9 @@ namespace bitmap_chats.Services
             graph.DrawLine(AxisPen, Margin, Margin, Margin, _height - Margin);
             graph.DrawLine(AxisPen, Margin, _height - Margin, _width - Margin, _height - Margin);
 
-            var maxValue = items.Max();
-            var minValue = items.Min();
-            var countValue = items.Count();
+            var maxValue = Items.Max(filter);
+            var minValue = Items.Min(filter);
+            var countValue = Items.Count();
 
             var chartWidth = Math.Abs(_end.X - _start.X - 50);
             var chartHeight = Math.Abs(_end.Y - (_start.Y + 50));
@@ -93,9 +93,9 @@ namespace bitmap_chats.Services
             var prevPoint = new Point();
 
             var ellipsePoints = new List<PointModel>();
-            for (var i = 0; i < items.Count(); i++)
+            for (var i = 0; i < Items.Count(); i++)
             {
-                var pixelYValue = divisionHeight * items[i] - divisionHeight * items.Min() + 25;
+                var pixelYValue = divisionHeight * Items.Select(filter).ToList()[i] - divisionHeight * Items.Min(filter) + 25;
                 var pixelXValue = divisionWidth * (i + 1);
 
                 if (i > 0)
@@ -107,7 +107,7 @@ namespace bitmap_chats.Services
                 ellipsePoints.Add(new PointModel()
                 {
                     Point = new Point(_start.X + pixelXValue, _start.Y - pixelYValue),
-                    Value = items[i]
+                    Value = Items.Select(filter).ToList()[i]
                 });
 
                 prevPoint = new Point(_start.X + pixelXValue, _start.Y - pixelYValue);
