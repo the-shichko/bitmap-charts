@@ -14,6 +14,7 @@
             </e>
           </e>
         </e>
+        <e p="PointModel.cs" t="Include" />
         <e p="Services" t="Include">
           <e p="ChartService.cs" t="Include" />
         </e>

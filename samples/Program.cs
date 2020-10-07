@@ -12,11 +12,11 @@ namespace samples
         {
             var chartService = new ChartService<int>(1300,1000)
             {
-                DivisionAxisX = 1,
-                DivisionAxisY = 25
+                DivisionAxisX = 4,
+                DivisionAxisY = 30
             };
 
-            chartService.Draw(new List<int>{30, 15, 45, 60, 122, 150, 190}).Save(Directory.GetCurrentDirectory() + "\\chart.png");
+            chartService.Draw(new List<int>{30, 150, 190, 68, 69, 100, 78, 40, 54, 23, 98, 66, 140}).Save(Directory.GetCurrentDirectory() + "\\chart.png");
 
             Console.WriteLine("Completed");
             await Task.Delay(-1);
