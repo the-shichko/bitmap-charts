@@ -8,6 +8,7 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="bitmap-chats.csproj" t="IncludeRecursive" />
         <e p="Models" t="Include">
+          <e p="ChartMode.cs" t="Include" />
           <e p="PointModel.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
